@@ -1,4 +1,3 @@
-import os
 from openvoicechat.tts.tts_elevenlabs import Mouth_elevenlabs as Mouth
 from openvoicechat.llm.llm_gpt import Chatbot_gpt as Chatbot
 from openvoicechat.stt.stt_hf import Ear_hf as Ear
