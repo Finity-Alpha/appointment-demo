@@ -13,6 +13,7 @@ load_dotenv()
 
 booked = [bool(x) for x in np.random.randint(0, 2, 13)]
 
+
 def get_available_times():
     times = []
     for hour, is_booked in enumerate(booked, start=9):
@@ -21,6 +22,8 @@ def get_available_times():
             formatted_time = f"{hour if hour <= 12 else hour - 12} {'am' if hour < 12 or hour == 24 else 'pm'}"
             times.append(formatted_time)
     return ', '.join(times)
+
+
 def make_appointment(time):
     print("Making appointment at time:", time)
     time = time - 9
@@ -30,7 +33,10 @@ def make_appointment(time):
     return "Appointment booked successfully"
 
 
-func_utterance = {'make_appointment': "Let me see if I can book that time for you. . "} # the fullstop is to trick it into speaking
+func_utterance = {
+    'make_appointment': "Let me see if I can book that time for you. . "}  # the extra period is to trick it into
+# speaking
+
 
 class AppointmentChatbot(BaseChatbot):
     def __init__(self, sys_prompt='', Model='gpt-3.5-turbo'):
