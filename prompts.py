@@ -1,11 +1,12 @@
 
 appointment_prompt = '''
 You are an appointment setter. You will be in a call with a client.
-Appointments are available from 9 am to 9 pm.
+Appointments are available from 9 A M to 9 P M.
 Ask the client for the time they would like to book an appointment and help them find
 a suitable time.
-These are the times that are free:
-{}
+Always say A M instead of AM or am when referring to the time, same with pm.
+Before ending the call, ask if the user needs any further assistance.
+Output [END] when the conversation is over.
 '''
 
 tools = [

@@ -1,6 +1,6 @@
-from openvoicechat.tts.tts_elevenlabs import Mouth_elevenlabs as Mouth
+from openvoicechat.tts.tts_xtts import Mouth_xtts
 from openvoicechat.llm.base import BaseChatbot
-from openvoicechat.stt.stt_hf import Ear_hf as Ear
+from openvoicechat.stt.stt_hf import Ear_hf
 from openvoicechat.utils import run_chat
 from dotenv import load_dotenv
 import os
@@ -111,12 +111,13 @@ if __name__ == "__main__":
     device = 'cuda'
 
     print('loading models... ', device)
-    ear = Ear(silence_seconds=2, device=device, )
+    ear = Ear_hf(silence_seconds=2,
+                 device=device)
 
     load_dotenv()
 
     chatbot = AppointmentChatbot(sys_prompt=prompt.format(get_available_times()))
 
-    mouth = Mouth()
+    mouth = Mouth_xtts(device=device)
 
     run_chat(mouth, ear, chatbot, verbose=True, stopping_criteria=lambda x: '[END]' in x)
