@@ -7,34 +7,42 @@ import os
 from openai import OpenAI
 from prompts import appointment_prompt as prompt
 from prompts import tools
-import numpy as np
+import torch
+import pandas as pd
 
 load_dotenv()
 
-booked = [bool(x) for x in np.random.randint(0, 2, 13)]
+doctor_schedule = pd.read_csv("doctors_schedule.csv")
 
 
-def get_available_times():
-    times = []
-    for hour, is_booked in enumerate(booked, start=9):
-        if not is_booked:
-            # Format time in 24-hour format and append to list
-            formatted_time = f"{hour if hour <= 12 else hour - 12} {'am' if hour < 12 or hour == 24 else 'pm'}"
-            times.append(formatted_time)
-    return ', '.join(times)
+def convert_to_str(time):
+    am = True
+    if time > 12:
+        am = False
+        time -= 12
+    elif time == 12:
+        am = False
+    time_str = f'{time} {"am" if am else "pm"}'
+    return time_str
 
 
-def make_appointment(time):
+def make_appointment(doctor, time):
+    booked = doctor_schedule[(doctor_schedule['Doctor'] == doctor) &
+                             (doctor_schedule['Time'] == convert_to_str(time))]['Booked'].values[0]
     print("Making appointment at time:", time)
-    time = time - 9
-    if booked[time] is True:
-        return "The time is already booked"
-    booked[time] = True
-    return "Appointment booked successfully"
+    if booked:
+        return "Sorry, that time is already booked. Please choose another time."
+    else:
+        doctor_schedule.loc[(doctor_schedule['Doctor'] == doctor) &
+                            (doctor_schedule['Time'] == convert_to_str(time)), 'Booked'] = True
+        doctor_schedule.to_csv("doctors_schedule.csv", index=False)
+        return "Appointment booked successfully"
 
 
 func_utterance = {
     'make_appointment': "Let me see if I can book that time for you. . "}  # the extra period is to trick it into
+
+
 # speaking
 
 
@@ -108,7 +116,7 @@ class AppointmentChatbot(BaseChatbot):
 
 
 if __name__ == "__main__":
-    device = 'cuda'
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     print('loading models... ', device)
     ear = Ear_hf(silence_seconds=2,
@@ -116,8 +124,10 @@ if __name__ == "__main__":
 
     load_dotenv()
 
-    chatbot = AppointmentChatbot(sys_prompt=prompt.format(get_available_times()))
+    chatbot = AppointmentChatbot(sys_prompt=prompt)
 
-    mouth = Mouth_xtts(device=device)
+    mouth = Mouth_xtts(device=device,
+                       model_id='tts_models/multilingual/multi-dataset/xtts_v2',
+                       speaker='Ana Florence')
 
     run_chat(mouth, ear, chatbot, verbose=True, stopping_criteria=lambda x: '[END]' in x)
