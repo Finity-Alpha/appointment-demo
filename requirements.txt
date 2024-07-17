@@ -1,0 +1,6 @@
+openvoicechat
+openai
+transformers
+TTS
+pandas
+python-dotenv

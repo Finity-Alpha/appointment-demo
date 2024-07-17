@@ -12,3 +12,11 @@ The [all_in_one.py](all_in_one.py) file contains the entire code in one py
 file, including the prompts. The file is 200 lines long, this is to 
 illustrate how easy it has become to make a voice AI bot using OVC.
 
+To run the code you need to install pytorch:
+https://pytorch.org/get-started/locally/
+
+Then install the requirements:
+```bash
+pip install -r requirements.txt
+```
+
