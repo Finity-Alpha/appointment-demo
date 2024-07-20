@@ -1,4 +1,4 @@
-openvoicechat
+git+https://github.com/Finity-Alpha/OpenVoiceChat.git
 openai
 transformers
 TTS
