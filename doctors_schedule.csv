@@ -2,10 +2,10 @@ Doctor,Time,Booked
 Doctor John,9 am,True
 Doctor John,10 am,False
 Doctor John,11 am,True
-Doctor John,12 pm,False
+Doctor John,12 pm,True
 Doctor John,1 pm,True
 Doctor John,2 pm,True
-Doctor John,3 pm,False
+Doctor John,3 pm,True
 Doctor John,4 pm,True
 Doctor John,5 pm,True
 Doctor John,6 pm,True

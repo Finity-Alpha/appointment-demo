@@ -1,4 +1,5 @@
 from openvoicechat.tts.tts_xtts import Mouth_xtts
+from openvoicechat.tts.tts_hf import Mouth_hf
 from openvoicechat.llm.base import BaseChatbot
 from openvoicechat.stt.stt_hf import Ear_hf
 from openvoicechat.utils import run_chat
@@ -119,15 +120,14 @@ if __name__ == "__main__":
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     print('loading models... ', device)
-    ear = Ear_hf(silence_seconds=2,
+    ear = Ear_hf(silence_seconds=1.5,
                  device=device)
-
     load_dotenv()
-
     chatbot = AppointmentChatbot(sys_prompt=prompt)
 
     mouth = Mouth_xtts(device=device,
                        model_id='tts_models/multilingual/multi-dataset/xtts_v2',
                        speaker='Ana Florence')
+    # mouth = Mouth_hf(device=device, forward_params={"speaker_id": 10})
 
     run_chat(mouth, ear, chatbot, verbose=True, stopping_criteria=lambda x: '[END]' in x)
