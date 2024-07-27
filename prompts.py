@@ -40,6 +40,23 @@ tools = [
                 "required": ["time", "doctor"],
             },
         },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_available_times",
+            "description": "Get the available times for the given doctor",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "doctor": {
+                        "type": "string",
+                        "description": "The name of the doctor to get the available times for."
+                    }
+                },
+                "required": ["doctor"],
+            },
+        },
     }
 
 ]

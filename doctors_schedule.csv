@@ -15,11 +15,11 @@ Doctor John,9 pm,False
 Doctor Jane,9 am,True
 Doctor Jane,10 am,False
 Doctor Jane,11 am,True
-Doctor Jane,12 pm,False
+Doctor Jane,12 pm,True
 Doctor Jane,1 pm,True
-Doctor Jane,2 pm,False
+Doctor Jane,2 pm,True
 Doctor Jane,3 pm,True
-Doctor Jane,4 pm,False
+Doctor Jane,4 pm,True
 Doctor Jane,5 pm,True
 Doctor Jane,6 pm,True
 Doctor Jane,7 pm,True

@@ -14,6 +14,11 @@ load_dotenv()
 doctor_schedule = pd.read_csv("doctors_schedule.csv")
 
 
+def get_available_times(doctor):
+    return ' ,'.join(
+        doctor_schedule[(doctor_schedule['Doctor'] == doctor) & (doctor_schedule['Booked'] == False)]['Time'].values)
+
+
 def make_appointment(doctor, time):
     print("Doctor:", doctor)
     print("Time:", time)
@@ -32,7 +37,10 @@ def make_appointment(doctor, time):
 func_utterance = {
     'make_appointment': ["Let me see if I can book that time for you.",
                          "Let me make that booking.",
-                         "Let me get back to you with the booking details."]}
+                         "Let me get back to you with the booking details."],
+    'get_available_times': ["Let me check the available times for you.",
+                            "Let me see what times are available.",
+                            "Let me check the schedule for you."]}
 
 if __name__ == "__main__":
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -46,7 +54,8 @@ if __name__ == "__main__":
     chatbot = Chatbot_gpt(sys_prompt=prompt, api_key=OPENAI_API_KEY,
                           tool_choice='auto', tools=tools,
                           tool_utterances=func_utterance,
-                          functions={'make_appointment': make_appointment})
+                          functions={'make_appointment': make_appointment,
+                                     'get_available_times': get_available_times})
 
     mouth = Mouth_xtts(device=device,
                        model_id='tts_models/multilingual/multi-dataset/xtts_v2',
