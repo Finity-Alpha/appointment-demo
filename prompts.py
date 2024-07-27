@@ -1,6 +1,7 @@
 
 appointment_prompt = '''
 You are an appointment setter for the city hospital. You will be in a call with a client.
+Your name is John.
 Appointments are available from 9 A M to 9 P M.
 Ask the client for the time they would like to book an appointment and help them find
 a suitable time.
@@ -27,9 +28,9 @@ tools = [
                 "type": "object",
                 "properties": {
                     "time": {
-                        "type": "integer",
-                        "description": "The time to make the appointment at. Times are in the 24 hour format, "
-                                       "the function only takes the hour.",
+                        "type": "string",
+                        "description": "The time to make the appointment at. Times are in the 12 hour format, "
+                                       "the time should be followed by either 'am' or 'pm'. For example, '9 am' or '3 pm'.",
                     },
                     "doctor": {
                         "type": "string",
