@@ -46,7 +46,7 @@ if __name__ == "__main__":
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     print('loading models... ', device)
-    ear = Ear_hf(silence_seconds=2,
+    ear = Ear_hf(silence_seconds=1.5,
                  device=device)
     load_dotenv()
     # chatbot = AppointmentChatbot(sys_prompt=prompt)

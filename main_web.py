@@ -34,7 +34,7 @@ async def websocket_endpoint(websocket: WebSocket):
     player = Player_ws(output_queue)
 
     print('loading models... ', device)
-    ear = Ear_hf(silence_seconds=2,
+    ear = Ear_hf(silence_seconds=1.5,
                  device=device,
                  listener=listener)
     load_dotenv()
